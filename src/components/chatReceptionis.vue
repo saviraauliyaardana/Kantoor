@@ -44,7 +44,7 @@
 				<b-modal id="modal-1" centered>
 					<b-icon icon="exclamation-triangle-fill" variant="warning" />
 					<div class="d-block">Apakah Anda yakin ?</div>
-					<div>Anda akan menerima pesanannya</div>
+					<div>Anda akan membatalkan pesanannya</div>
 				</b-modal>
 			</div>
 		</div>

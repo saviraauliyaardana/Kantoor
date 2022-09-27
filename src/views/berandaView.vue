@@ -87,7 +87,7 @@
               fill="#F4F4F4" />
           </svg>
           <br>
-          Pemesanan
+          Chat Aktif
           <br>
           3
         </b-card-text>
