@@ -116,7 +116,7 @@
 				.get("http://server.greskit.com:8080/admin/gedungs")
 				.then(res => {
 					const dataAll = res.data.data;
-					// console.log(res.data.data);
+					console.log(res.data);
 					dataAll.forEach(item1 => {
 						// console.log(item);
 						if (item1.reviews) {

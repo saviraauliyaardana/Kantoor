@@ -11,7 +11,7 @@ import daftarUlasan from "../views/daftarUlasan.vue";
 import addPesanan from "../views/addPesanan.vue";
 import kelolaPesanan from "../views/kelolaPesanan.vue";
 // import addPromosi from "../views/addPromosi.vue";
-import kelolaPromosi from "../views/kelolaPromosi.vue";
+// import kelolaPromosi from "../views/kelolaPromosi.vue";
 import profilAdmin from "../views/profilAdmin.vue";
 import liveChatView from "../views/liveChatView.vue";
 
@@ -57,12 +57,6 @@ const routes = [
 		path: "/kelolaPesanan",
 		name: "Kelola Pesanan",
 		component: kelolaPesanan,
-	},
-
-	{
-		path: "/kelolaPromosi",
-		name: "Kelola Promosi",
-		component: kelolaPromosi,
 	},
 	{
 		path: "/profilAdmin",
