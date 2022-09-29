@@ -10,7 +10,8 @@
       <b-card>
         <p>Pembuatan Gedung Baru</p>
         <br>
-          <div>
+          <!-- <div> -->
+            <b-container fluid class="row mb-3">
             <b-form  @batal="onReset" v-if="show">
                 <b-row class="mt-2">
                 <b-col sm="2" class="text-end">
@@ -109,7 +110,8 @@
                   <b-button type="batal" variant="outline-success"> Batal </b-button>
                 </b-col>
             </b-form>
-          </div>   
+          </b-container>
+          <!-- </div>    -->
         </b-card>
       </div>
       <br>
