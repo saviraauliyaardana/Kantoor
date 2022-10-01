@@ -55,7 +55,7 @@
 				loading: false,
 				id: null,
 				fields: [
-					{ key: "IdGedung", label: "ID" },
+					{ key: "IdGedung", label: "ID Gedung" },
 					{ key: "IdPengguna", label: "ID Pengguna" },
 					{ key: "NamaGedung", label: "Nama Gedung" },
 					{ key: "Rating", label: "Rating" },
@@ -87,7 +87,7 @@
 						if (value === true) {
 							this.loading = true;
 							const url =
-								"http://server.greskit.com:8080/admin/review/" +
+								"http://server.greskit.com:8080/review/" +
 								this.id;
 							// console.log(url);
 							axios

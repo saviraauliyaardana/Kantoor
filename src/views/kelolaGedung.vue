@@ -14,10 +14,11 @@
       <b-table-simple striped hover>
         <b-thead>
           <b-tr>
-            <b-th>No</b-th>
+            <!-- <b-th>No</b-th> -->
             <b-th>ID Gedung</b-th>
             <b-th>Jenis Gedung</b-th>
             <b-th>Lokasi</b-th>
+            <b-th>Deskripsi</b-th>
             <b-th>Harga</b-th>
             <b-th>Permintaan</b-th>
           </b-tr>
@@ -25,10 +26,11 @@
         <b-tbody>
     
           <b-tr v-for="(gedung, id) in gedungs" :key="id">
-            <b-td>ini nomor </b-td>
+            <!-- <b-td>ini nomor </b-td> -->
             <b-td>{{ gedung.id }}</b-td>
-            <b-td>{{ gedung.jenis_gedung }}</b-td>
+            <b-td>{{ gedung.name }}</b-td>
             <b-td>{{ gedung.location }}</b-td>
+            <b-td>{{ gedung.description }}</b-td>
             <b-td>Rp. {{ gedung.price }} /Day</b-td>
             <b-td>
               <b-button variant="success" @click="editGedung(gedung.id),$bvModal.show('modalEdit')">Edit</b-button>
