@@ -26,7 +26,7 @@
             <b-td>Email</b-td>
             <b-td>Nama</b-td>
             <b-td>No.Hp</b-td>
-            <!-- <b-td>Status</b-td> -->
+            <b-td>alamat</b-td>
             <b-td>Tanggal Registrasi</b-td>
             <b-td>Permintaan</b-td>
           </b-tr>
@@ -38,7 +38,7 @@
             <b-td>{{ user.email }}</b-td>
             <b-td>{{ user.name }}</b-td>
             <b-td>{{ user.phone }}</b-td>
-            <!-- <b-td>{{ user.status }}</b-td> -->
+            <b-td>{{ user.alamat }}</b-td>
             <b-td>{{ user.CreatedAt }}</b-td>
             <b-td><b-button variant="danger" @click="$bvModal.show('modalDelete' + user.id)">Hapus</b-button></b-td>
              <!-- Modal delete -->
