@@ -71,44 +71,58 @@
 					"http://server.greskit.com:8080/admin/bookings"
 				)
 				.then(res => {
-					console.log(res.data);
+					// console.log(res.data);
 					const data = res.data.data;
-					data.forEach(item => {
-						var gedung = item.gedung;
-						var user = item.user;
-						gedung.forEach(item1 => {
-							user.forEach(item2 => {
-								this.items.push({
-									Nama_Gedung: item1.name || "Lupa Masukkan",
-									Total_Harga: item1.price || "Lupa Narok",
-									ID: item.id,
-									Nama: item2.fullname || "-",
-									NomorHp: item2.phone || "-",
-									Jumlah_Pemesanan: item.totalbooking || "Lupa Masukkan",
-									ID_Pemesanan: item.booking_code,
-									Tanggal_Masuk: item.checkin || "-",
-									Tanngal_Keluar: item.checkout || "-",
-									Status:
-										item.status === "0" ? "Belum Diterima" : "Sudah Diterima",
-								});
-							});
+					console.log(data);
+					data.forEach((item) => {
+						const dataUser =item.user;
+						dataUser.forEach((user) => {
+							this.items.push({
+								ID_Pemesanan : item.bookingcode || "-",
+								Nama: user.fullname || "-",
+								NomorHp: item.phone || "-",
+								Nama_Gedung: item.nama_gedung || "Belum Dipilih",
+								Jumlah_Pemesanan: item.totalbooking || "Lupa Masukkan",
+								Total_Harga: item.price || "Lupa Narok",
+								Tanggal_Masuk: item.checkin || "-",
+								Tanngal_Keluar: item.checkout || "-",
+								Status: item.status === "0" ? "Belum Diterima" : "Sudah Diterima",
+						// 	Nama_Gedung: item.nama_gedung || "Lupa Masukkan",
+						// 	Total_Harga: item.price || "Lupa Narok",
+						// 	ID: item.id,
+						// 			Nama: item.nama || "-",
+						// 			NomorHp: item.phone || "-",
+						// 			Jumlah_Pemesanan: item.totalbooking || "Lupa Masukkan",
+						// 			ID_Pemesanan: item.id_booking,
+						// 			Tanggal_Masuk: item.checkin || "-",
+						// 			Tanngal_Keluar: item.checkout || "-",
+						// 			Status:
+						// 				item.status === "0" ? "Belum Diterima" : "Sudah Diterima",
+						// });
 						});
+						// var gedung = item.gedung;
+						// var user = item.user;
+						// gedung.forEach(item1 => {
+						// 	user.forEach(item2 => {
+						// 		this.items.push({
+						// 			Nama_Gedung: item1.name || "Lupa Masukkan",
+						// 			Total_Harga: item1.price || "Lupa Narok",
+						// 			ID: item.id,
+						// 			Nama: item2.fullname || "-",
+						// 			NomorHp: item2.phone || "-",
+						// 			Jumlah_Pemesanan: item.totalbooking || "Lupa Masukkan",
+						// 			ID_Pemesanan: item.booking_code,
+						// 			Tanggal_Masuk: item.checkin || "-",
+						// 			Tanngal_Keluar: item.checkout || "-",
+						// 			Status:
+						// 				item.status === "0" ? "Belum Diterima" : "Sudah Diterima",
+						// 		});
+						// 	});
+						// });
 
-						this.items.push({
-							Nama_Gedung: item.gedung.name || "Lupa Masukkan",
-							Total_Harga: item.gedung.price || "Lupa Narok",
-							ID: item.id,
-									Nama: item.fullname || "-",
-									NomorHp: item.phone || "-",
-									Jumlah_Pemesanan: item.totalbooking || "Lupa Masukkan",
-									ID_Pemesanan: item.booking_code,
-									Tanggal_Masuk: item.checkin || "-",
-									Tanngal_Keluar: item.checkout || "-",
-									Status:
-										item.status === "0" ? "Belum Diterima" : "Sudah Diterima",
 						});
 					});
-					console.log(this.items);
+					// console.log(this.items);
 					this.loading = false;
 				})
 				.catch(e => {
