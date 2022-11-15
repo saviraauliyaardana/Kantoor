@@ -49,3 +49,85 @@ export var review = [
 		Ulasan_Pengguna: "Gedung sangat bersih dan segar udaranya",
 	},
 ];
+
+export let chat = {
+	dhskahdaskjodklsa: {
+		nama: "Muslikin MD",
+		orderid: "",
+		chatMassage: {
+			123213: {
+				time: "23 Desember 2022",
+				massage: "Halo saya ada pesanan nih",
+				stastus: 0,
+				from: "user",
+			},
+			3211233: {
+				time: "23 Desember 2022",
+				massage: "Halo saya ada pesanan nih",
+				stastus: 0,
+				from: "admin",
+			},
+		},
+	},
+	asdsadasdsadsaweqw: {
+		nama: "mamang MD",
+		orderid: "",
+		chatMassage: {
+			123213: {
+				time: "23 Desember 2022",
+				massage: "Halo saya ada pesanan nih",
+				stastus: 0,
+				from: "user",
+			},
+			3211233: {
+				time: "23 Desember 2022",
+				massage: "Halo saya ada pesanan nih",
+				stastus: 0,
+				from: "admin",
+			},
+		},
+	},
+};
+import { app } from "@/common/firebase";
+import { getDatabase, ref, set } from "firebase/database";
+export const firebaseUpdate = () => {
+	const db = getDatabase(app);
+	set(ref(db, "chat/"), {
+		dhskahdaskjodklsa: {
+			nama: "Muslikin MD",
+			orderid: "",
+			chatMassage: {
+				123213: {
+					time: "23 Desember 2022",
+					massage: "Halo saya ada pesanan nih",
+					stastus: 0,
+					from: "user",
+				},
+				3211233: {
+					time: "23 Desember 2022",
+					massage: "Halo saya ada pesanan nih",
+					stastus: 0,
+					from: "admin",
+				},
+			},
+		},
+		asdsadasdsadsaweqw: {
+			nama: "mamang MD",
+			orderid: "",
+			chatMassage: {
+				123213: {
+					time: "23 Desember 2022",
+					massage: "Halo saya ada pesanan nih",
+					stastus: 0,
+					from: "user",
+				},
+				3211233: {
+					time: "23 Desember 2022",
+					massage: "Halo saya ada pesanan nih",
+					stastus: 0,
+					from: "admin",
+				},
+			},
+		},
+	});
+};

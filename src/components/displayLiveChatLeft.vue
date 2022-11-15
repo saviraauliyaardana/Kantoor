@@ -2,9 +2,11 @@
 
 <template>
 	<div class="displayLeft">
-		<b-form-input type="text" placeholder="Cari Nama"></b-form-input>
+		<!-- <b-form-input type="text" placeholder="Cari Nama"></b-form-input> -->
 		<div class="position-display">
-			<div v-for="index in 10" :key="index"><CardProfile /></div>
+			<div v-for="(data, index) in chat" :key="index">
+				<CardProfile :nama="data.nama" :text="data.chatMassage" :id="index" />
+			</div>
 		</div>
 	</div>
 </template>
@@ -14,6 +16,23 @@
 		name: "displayLiveChatLeft",
 		components: {
 			CardProfile,
+		},
+		data() {
+			return {
+				chat: [],
+			};
+		},
+		methods: {
+			displayArticle(id) {
+				console.log(id);
+			},
+		},
+
+		async mounted() {
+			let chat = await localStorage.getItem("chat");
+			chat = JSON.parse(chat);
+			// console.log(chat);
+			this.chat = chat;
 		},
 	};
 </script>

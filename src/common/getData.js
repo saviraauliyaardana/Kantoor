@@ -3,8 +3,8 @@
 import axios from "axios";
 export const getReview = () => {
 	axios
-		.get("http://server.greskit.com:8080/admin/review")
-		.then(res => {
+		.get(process.env.APILink + "/admin/review")
+		.then((res) => {
 			// console.log(res.data.data);
 			const dataReview = res.data.data || null;
 			if (dataReview == null) return false;
@@ -12,15 +12,15 @@ export const getReview = () => {
 			return dataReview;
 			// console.log(review);
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.log(err);
 			return false;
 		});
 };
 export const getGedung = () => {
 	axios
-		.get("http://server.greskit.com:8080/admin/gedungs")
-		.then(res => {
+		.get(process.env.APILink + "/admin/gedungs")
+		.then((res) => {
 			// console.log(res.data.data);
 			const dataGedung = res.data.data || null;
 			if (dataGedung == null) return false;
@@ -28,7 +28,7 @@ export const getGedung = () => {
 			return dataGedung;
 			// console.log(review);
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.log(err);
 			return false;
 		});

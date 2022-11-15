@@ -1,7 +1,11 @@
 <!-- @format -->
 
 <template>
-	<div class="cardProfile" :class="{ backgroundChange: actived }">
+	<div
+		class="cardProfile"
+		@click="savingData(nama)"
+		:class="{ backgroundChange: actived }"
+	>
 		<div class="vertical">
 			<div class="kiri-card">
 				<img
@@ -10,11 +14,11 @@
 					alt="foto orang"
 				/>
 				<div class="margin-left-side">
-					<h6>Budi Sutarmi</h6>
-					<p>{{ text }}</p>
+					<h6>{{ nama }}</h6>
+					<p>{{ textDisplay }}</p>
 				</div>
 			</div>
-			<b-badge variant="danger">2</b-badge>
+			<!-- <b-badge variant="danger">2</b-badge> -->
 		</div>
 		<hr />
 	</div>
@@ -25,12 +29,27 @@
 
 	export default {
 		name: "cardProfile",
-		props: ["actived"],
+		props: ["actived", "nama", "text", "id"],
 		data() {
 			return {
-				text: textSplit("Hello, apakah saya bisa memesan disini ?"),
+				textDisplay: "none",
 				aktif: true,
 			};
+		},
+		methods: {
+			savingData(name) {
+				localStorage.setItem("idMassage", this.id);
+				localStorage.setItem("OpenMassage", name);
+				// console.log(name);
+				// console.log("worked");
+			},
+		},
+		async mounted() {
+			localStorage.setItem(this.nama, JSON.stringify(this.text));
+			Object.values(this.text).forEach((element) => {
+				if (element.from === "user")
+					this.textDisplay = textSplit(element.massage);
+			});
 		},
 	};
 </script>
@@ -54,6 +73,9 @@
 	}
 	.cardProfile {
 		text-align: start;
+	}
+	.cardProfile:active {
+		background-color: aquamarine;
 	}
 	.rounded-profile {
 		max-width: 42px;

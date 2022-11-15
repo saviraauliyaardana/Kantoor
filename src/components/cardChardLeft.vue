@@ -3,12 +3,13 @@
 <template>
 	<div class="chatLeft">
 		<img class="rounded-profile" src="../assets/user.png" alt="foto orang" />
-		<div class="chat-text">Halo saya ada pesanan nih</div>
+		<div class="chat-text">{{ massage }}</div>
 	</div>
 </template>
 <script>
 	export default {
 		name: "cardCharLeft",
+		props: ["massage"],
 	};
 </script>
 <style scoped>
