@@ -31,23 +31,27 @@ export default new Vuex.Store({
 	},
 	actions: {
 		loginAdmin(store) {
+			let url = process.env.VUE_APP_APILink + "/login";
+			console.log(url);
 			axios
-				.post("http://server.greskit.com:8080/login", {
+				.post(url, {
 					email: store.state.email,
 					password: store.state.password,
 				})
-				.then(response => {
+				.then((response) => {
 					console.log(response.data);
-
-					localStorage.setItem("token", response.data.token);
-					localStorage.setItem("email", response.data.email);
-					localStorage.setItem("id", response.data.id_user);
-					store.commit("getStatusLogin", response.data.status);
+					response.data.map((item) => {
+						localStorage.setItem("token", item.token);
+						localStorage.setItem("email", item.email);
+						localStorage.setItem("uid", item.id);
+						store.commit("getStatusLogin", item.status);
+					});
 					if (response.data.status == true) {
-						router.push({ path: "/beranda" });
+						location.reload();
 					}
+					location.reload();
 				})
-				.catch(error => {
+				.catch((error) => {
 					console.log(error);
 					if (error.response.status == 401) {
 						alert("Email atau Password Salah");

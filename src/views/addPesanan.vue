@@ -82,7 +82,6 @@
 							id="input-small"
 							type="text"
 							size="sm"
-							:disabled="edit"
 							v-model="items.Total_Harga"
 							placeholder="Masukkan Total Harga"
 						></b-form-input>
@@ -164,129 +163,80 @@
 			};
 		},
 		mounted() {
-			const data = JSON.parse(localStorage.getItem("EditPesanan"));
-			// console.log(data);
+			let url = process.env.VUE_APP_APILink + "/gedungs";
 
-			axios
-				.get("http://server.greskit.com:8080/admin/gedungs")
-				.then(response => {
-					let data = response.data.data;
-					data.forEach(item => {
-						this.options.push({
-							value: { id: item.id, name: item.name },
-							text: item.name,
-						});
-					});
-					// console.log(this.nearby);
-				})
-				.catch(error => {
-					console.log(error);
-				});
+			const data = JSON.parse(localStorage.getItem("EditPesanan"));
 			if (data) {
 				this.items = data;
 				this.edit = true;
-				// console.log(this.items, this.edit);
+				console.log(this.items, this.edit);
 				localStorage.removeItem("EditPesanan");
 				// alert("Data Masuk dan dihapus");
 			}
+			axios
+				.get(url)
+				.then((res) => {
+					// console.log(res.data);
+					res.data.forEach((items) => {
+						console.log(items);
+						this.options.push({
+							value: items.id,
+							text: items.name,
+						});
+					});
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 			this.loading = false;
 		},
 
 		methods: {
 			async simpan() {
-				var date = () => {
-					var today = new Date();
-					var dd = today.getDate();
-
-					var mm = today.getMonth() + 1;
-					var yyyy = today.getFullYear();
-					if (dd < 10) {
-						dd = "0" + dd;
-					}
-
-					if (mm < 10) {
-						mm = "0" + mm;
-					}
-					today = mm + "-" + dd + "-" + yyyy;
-					return today;
-				};
 				this.loading1 = false;
-				let data = [];
-				// date();
-				// this.items.forEach(item => {
-				// 	data.push({
-				// 		status: "0",
-				// 		bookingcode: item.ID_Pemesanan,
-				// 		checkin: item.Tanggal_Masuk,
-				// 		checkout: item.Tanggal_Keluar,
-				// 	});
-				// });
+
+				console.log(this.items);
 				if (this.edit) {
-					let url =
-						"http://server.greskit.com:8080/admin/booking/" +
-						this.items.ID;
-
 					// console.log(this.items);
-					// data = JSON.stringify({
-					// 	checkout: this.items.Tanngal_Keluar,
-					// 	orderdate: date().toString(),
-					// 	checkin: this.items.Tanggal_Masuk,
-					// });
-					console.log(this.items);
-					await axios
-						.put(
-							url,
-							{
-								checkout: this.items.Tanngal_Keluar,
-								orderdate: date().toString(),
-								checkin: this.items.Tanggal_Masuk,
-								phone: this.items.NomorHp,
-								price: this.items.Total_Harga,
-								totalbooking: this.items.Jumlah_Pemesanan,
-								fullname: this.items.Nama,
-							},
-							{
-								headers: {
-									// Overwrite Axios's automatically set Content-Type
-									"Content-Type": "application/json",
-								},
-							}
-						)
+					let url = process.env.VUE_APP_APILink + "/bookings/" + this.items.ID;
 
-						.then(res => {
+					await axios
+						.put(url, {
+							id: this.items.ID,
+							check_out: this.items.Tanngal_Keluar,
+							check_in: this.items.Tanggal_Masuk,
+							phone: this.items.NomorHp,
+							price: this.items.Total_Harga,
+							totalBooking: this.items.Jumlah_Pemesanan,
+							name: this.items.Nama,
+							gedung: this.selected,
+						})
+						.then((res) => {
 							console.log(res);
 							this.$router.push("/kelolaPesanan");
 						})
-						.catch(err => {
+						.catch((err) => {
 							console.log(err);
 						});
 				} else {
 					// console.log(this.items);
-					let url =
-						"http://server.greskit.com:8080/admin/booking";
-					data = JSON.stringify({
-						status: "0",
-						checkout: this.items.Tanngal_Keluar,
-						fullname: this.items.Nama,
-						totalbooking: this.items.Jumlah_Pemesanan,
-						bookingcode: Math.random().toString(),
-						orderdate: date().toString(),
-						checkin: this.items.Tanggal_Masuk,
-						phone: this.items.NomorHp,
-					});
-					console.log(JSON.parse(data));
+					let url = process.env.VUE_APP_APILink + "/bookings";
 					await axios
-						.post(url, data, {
-							headers: {
-								// Overwrite Axios's automatically set Content-Type
-								"Content-Type": "application/json",
-							},
+						.post(url, {
+							status: "0",
+							check_out: this.items.Tanngal_Keluar,
+							check_in: this.items.Tanggal_Masuk,
+							phone: this.items.NomorHp,
+							price: this.items.Total_Harga,
+							totalBooking: this.items.Jumlah_Pemesanan,
+							name: this.items.Nama,
+							gedung: this.selected,
 						})
-						.then(res => {
+						.then((res) => {
 							console.log(res);
 							this.$router.push("/kelolaPesanan");
 						})
-						.catch(err => {
+						.catch((err) => {
 							console.log(err);
 						});
 				}

@@ -38,7 +38,7 @@
 						<b-td>{{ user.name }}</b-td>
 						<b-td>{{ user.phone }}</b-td>
 						<b-td>{{ user.alamat }}</b-td>
-						<b-td>{{ user.CreatedAt }}</b-td>
+						<b-td>{{ user.created_at }}</b-td>
 						<b-td
 							><b-button
 								variant="danger"
@@ -129,18 +129,19 @@
 		methods: {
 			fetchUsers() {
 				axios
-					.get("http://server.greskit.com:8080/admin/users")
+					.get(process.env.VUE_APP_APILink + "/user")
 					.then((response) => {
-						this.users = response.data.data;
-						// console.log(this.users)
+						this.users = response.data;
+						console.log(response.data);
 					})
 					.catch((error) => {
 						console.log(error);
 					});
 			},
 			deleteUser(id) {
+				// console.log(id);
 				axios
-					.delete("http://server.greskit.com:8080/admin/user/" + id)
+					.delete(process.env.VUE_APP_APILink + "/user/" + id)
 					.then((response) => {
 						this.fetchUsers();
 						console.log(response);

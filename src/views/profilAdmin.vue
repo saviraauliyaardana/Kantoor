@@ -97,22 +97,24 @@
 			simpanPassword() {
 				if (this.form.passwordBaru === this.form.passwordBaru2) {
 					var url =
-						"http://server.greskit.com:8080/admin/profile/" +
-							localStorage.getItem("id") || 64;
+						process.env.VUE_APP_APILink +
+						"/user/reset-password/" +
+						localStorage.getItem("uid");
 					axios
 						.put(url, {
 							password: this.form.passwordLama,
 							newpassword: this.form.passwordBaru,
-							Confirmpassword: this.form.passwordBaru2,
 						})
-						.then(res => {
+						.then((res) => {
 							console.log(res);
+							localStorage.clear();
+							this.$router.push("/");
 							alert("Berhasil Merubah data");
 						})
-						.catch(err => {
+						.catch((err) => {
 							console.log(err);
 						});
-				}
+				} else alert("password baru tidak sama");
 			},
 		},
 	};

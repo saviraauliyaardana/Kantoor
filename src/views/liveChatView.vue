@@ -46,13 +46,15 @@
 		},
 
 		async mounted() {
-			const database = getDatabase(app);
-			const starCountRef = ref(database, "chat/");
-			onValue(starCountRef, (snapshot) => {
-				if (snapshot.exists()) {
-					localStorage.setItem("chat", JSON.stringify(snapshot.val()));
-				} else alert("Tidak ada pesan");
-			});
+			window.setInterval(() => {
+				const database = getDatabase(app);
+				const starCountRef = ref(database, "chat/");
+				onValue(starCountRef, (snapshot) => {
+					if (snapshot.exists()) {
+						localStorage.setItem("chat", JSON.stringify(snapshot.val()));
+					} else alert("Tidak ada pesan");
+				});
+			}, 500);
 		},
 	};
 </script>

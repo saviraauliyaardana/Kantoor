@@ -91,7 +91,6 @@
 					<!-- Modal Edit -->
 					<b-modal
 						id="modalEdit"
-						v-for="edit in editGedungQuery"
 						:key="edit.id"
 						hide-footer
 						hide-header
@@ -123,7 +122,7 @@
 								<b-form-label>Lokasi</b-form-label>
 								<b-form-input
 									type="text"
-									v-model="edit.location"
+									v-model="edit.Location"
 								></b-form-input>
 							</b-form-group>
 							<b-form-group>
@@ -180,6 +179,7 @@
 	import Breadcrumb from "../components/breadcrumb.vue";
 	import FooterComponent from "@/components/footerComponent.vue";
 	import LiveChatBtn from "@/components/liveChatBtn.vue";
+	import { BModal, VBModal } from "bootstrap-vue";
 	import axios from "axios";
 
 	export default {
@@ -190,14 +190,16 @@
 			Breadcrumb,
 			FooterComponent,
 			LiveChatBtn,
+			BModal,
 		},
+		directives: { "b-modal": VBModal },
 		data() {
 			return {
 				gedungs: [],
-				editGedungQuery: {
-					id: "",
+				edit: {
+					id: 0,
 					name: "",
-					location: "",
+					Location: "",
 					price: "",
 					latitude: "",
 					longitude: "",
@@ -206,18 +208,7 @@
 					nearby: [],
 					jenisgedung: [],
 				},
-				// edit: {
-				//   id: '',
-				//   name: '',
-				//   location: '',
-				//   price: '',
-				//   latitude: '',
-				//   longitude: '',
-				//   description: '',
-				//   reviews:[],
-				//   nearby:[],
-				//   jenisgedung: [],
-				// },
+
 				loading: true,
 				modalDelete: false,
 				modalEdit: false,
@@ -228,23 +219,44 @@
 		},
 		methods: {
 			fetchGedung() {
+				let url = process.env.VUE_APP_APILink + "/gedungs";
+				// console.log(url);
 				axios
-					.get("http://server.greskit.com:8080/admin/gedungs")
+					.get(url)
 					.then((response) => {
-						this.gedungs = response.data.data;
-						this.loading = false;
+						// console.log(response);
+						if (response.status === 200) {
+							this.gedungs = response.data;
+							this.loading = false;
+							console.log(this.gedungs);
+						}
 					})
 					.catch((error) => {
 						console.log(error);
 						this.loading = false;
 					});
 			},
-			editGedung(id) {
-				axios
-					.get("http://server.greskit.com:8080/admin/gedung/" + id)
+			async editGedung(id) {
+				let url = process.env.VUE_APP_APILink + "/gedungs/" + id;
+				await axios
+					.get(url)
 					.then((response) => {
-						this.editGedungQuery = response.data.data;
-						console.log(this.editGedungQuery);
+						// console.log(response.data);
+						response.data.forEach((item) => {
+							this.edit = {
+								id: item.id,
+								name: item.name,
+								Location: item.location,
+								price: item.price,
+								latitude: item.latitude,
+								longitude: item.longitude,
+								description: item.description,
+								reviews: item.reviews_id,
+								nearby: item.id_nearby,
+								jenisgedung: item.id_jenis,
+							};
+						});
+						console.log(this.edit);
 						// this.fetchGedung()
 					})
 					.catch((error) => {
@@ -252,31 +264,35 @@
 					});
 			},
 			updateGedung(id) {
+				// console.log(id);
+				let url = process.env.VUE_APP_APILink + "/gedungs/" + id;
 				axios
-					.put("http://server.greskit.com:8080/admin/gedung/" + id, {
-						id: this.editGedungQuery.id,
-						name: this.editGedungQuery.name,
-						location: this.editGedungQuery.location,
-						price: this.editGedungQuery.price,
-						latitude: this.editGedungQuery.latitude,
-						longitude: this.editGedungQuery.longitude,
-						description: this.editGedungQuery.description,
-						reviews: this.editGedungQuery.reviews,
-						nearby: this.editGedungQuery.nearby,
-						jenisgedung: this.editGedungQuery.jenisgedung,
+					.put(url, {
+						id_booking: this.edit.id,
+						name: this.edit.name,
+						location: this.edit.Location,
+						price: this.edit.price,
+						latitude: this.edit.latitude,
+						longitude: this.edit.longitude,
+						description: this.edit.description,
+						reviews: this.edit.reviews,
+						nearby: this.edit.nearby,
+						Jenis: this.edit.jenisgedung,
 					})
 					.then((response) => {
 						this.fetchGedung();
 						console.log(response);
-						this.modalEdit = true;
+						this.modalEdit = false;
 					})
 					.catch((error) => {
 						console.log(error);
 					});
 			},
 			deleteGedung(id) {
+				let url = process.env.VUE_APP_APILink + "/gedungs/";
+				// console.log(url + id);
 				axios
-					.delete("http://server.greskit.com:8080/admin/gedung/" + id)
+					.delete(url + id)
 					.then((response) => {
 						this.fetchGedung(response);
 						console.log(id);

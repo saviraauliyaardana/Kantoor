@@ -83,19 +83,18 @@
 						hideHeaderClose: false,
 						centered: true,
 					})
-					.then(value => {
+					.then((value) => {
 						if (value === true) {
 							this.loading = true;
 							const url =
-								"http://server.greskit.com:8080/review/" +
-								this.id;
+								process.env.VUE_APP_APILink + "/gedungs/review/" + this.id;
 							// console.log(url);
 							axios
 								.delete(url)
-								.then(res => {
+								.then((res) => {
 									console.log(res);
 								})
-								.catch(err => {
+								.catch((err) => {
 									console.log(err);
 								})
 								.finally(() => {
@@ -105,37 +104,32 @@
 								});
 						}
 					})
-					.catch(err => {
+					.catch((err) => {
 						console.log(err);
 					});
 				this.loading = false;
 			},
 		},
 		async mounted() {
+			const url = process.env.VUE_APP_APILink + "/gedungs/review";
 			axios
-				.get("http://server.greskit.com:8080/admin/gedungs")
-				.then(res => {
-					const dataAll = res.data.data;
+				.get(url)
+				.then((res) => {
+					const dataAll = res.data;
 					console.log(res.data);
-					dataAll.forEach(item1 => {
-						// console.log(item);
-						if (item1.reviews) {
-							let review = item1.reviews;
-							review.forEach(item2 => {
-								this.items.push({
-									IdGedung: item1.id,
-									IdPengguna: item2.id,
-									Review: item2.description,
-									Rating: item2.rating,
-									NamaGedung: item1.name,
-								});
-							});
-						}
+					dataAll.forEach((item1) => {
+						this.items.push({
+							IdGedung: item1.id_gedung,
+							IdPengguna: item1.id_user,
+							Review: item1.description,
+							Rating: item1.rating,
+							NamaGedung: item1.name || "some error",
+						});
 					});
 					// console.log(this.items);
 					this.loading = false;
 				})
-				.catch(err => {
+				.catch((err) => {
 					console.log(err);
 					this.loading = false;
 				});

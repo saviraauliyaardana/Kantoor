@@ -7,7 +7,7 @@ import router from "./router";
 import store from "./store";
 import { BootstrapVue, BootstrapVueIcons, IconsPlugin } from "bootstrap-vue";
 import axios from "axios";
-// import VueWebsocket from "vue-websocket";
+import VueHtmlToPaper from "vue-html-to-paper";
 
 axios.defaults.withCredentials = true;
 // axios.defaults.baseURL = 'https://mocki.io/v1/eaad110a-08c3-477f-a37b-583945c3b475';
@@ -22,10 +22,21 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(BootstrapVueIcons);
 Vue.config.productionTip = false;
-// Vue.use(VueWebsocket, "https://gauri-golang-chat.herokuapp.com/");
+const options = {
+	name: "_blank",
+	specs: ["fullscreen=yes", "titlebar=yes", "scrollbars=yes"],
+	styles: [
+		"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css",
+		"https://unpkg.com/kidlat-css/css/kidlat.css",
+	],
+	timeout: 1000, // default timeout before the print window appears
+	autoClose: false, // if false, the window will not close after printing
+	windowTitle: window.document.title, // override the window title
+};
 
+Vue.use(VueHtmlToPaper, options);
 new Vue({
 	router,
 	store,
-	render: h => h(App),
+	render: (h) => h(App),
 }).$mount("#app");

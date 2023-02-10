@@ -14,6 +14,7 @@ import kelolaPesanan from "../views/kelolaPesanan.vue";
 // import kelolaPromosi from "../views/kelolaPromosi.vue";
 import profilAdmin from "../views/profilAdmin.vue";
 import liveChatView from "../views/liveChatView.vue";
+import invoice from "../views/invoice.vue";
 
 Vue.use(VueRouter);
 
@@ -68,6 +69,11 @@ const routes = [
 		name: "Live Chat view",
 		component: liveChatView,
 	},
+	{
+		path: "/invoice",
+		name: "invoice data",
+		component: invoice,
+	},
 ];
 
 const router = new VueRouter({
@@ -75,7 +81,5 @@ const router = new VueRouter({
 	base: process.env.BASE_URL,
 	routes,
 });
-
-// router.beforeEach((to, from, next) => {});
 
 export default router;

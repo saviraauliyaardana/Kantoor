@@ -28,11 +28,13 @@
 			},
 		},
 
-		async mounted() {
-			let chat = await localStorage.getItem("chat");
-			chat = JSON.parse(chat);
-			// console.log(chat);
-			this.chat = chat;
+		mounted() {
+			window.setInterval(() => {
+				let chat = localStorage.getItem("chat");
+				chat = JSON.parse(chat);
+				// console.log(chat);
+				this.chat = chat;
+			}, 600);
 		},
 	};
 </script>
